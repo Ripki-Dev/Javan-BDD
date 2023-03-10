@@ -8,6 +8,7 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.Assert;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.Wait;
@@ -20,7 +21,14 @@ public class contact {
     public static String URL = "https://javan.co.id";
     public void openWeb(String path){
         WebDriverManager.chromedriver().setup();
-        driver = new ChromeDriver();
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--disable-notifications");
+        options.addArguments("--disable-gpu");
+        options.addArguments("--disable-extensions");
+        options.addArguments("--no-sandbox");
+        options.addArguments("--disable-dev-shm-usage");
+        options.addArguments("--remote-allow-origins=*");
+        driver = new ChromeDriver(options);
         driver.manage().window().maximize();
         driver.get(URL+path);
     }
@@ -41,7 +49,7 @@ public class contact {
         JavascriptExecutor js = (JavascriptExecutor) driver;
         WebElement titleField = driver.findElement(By.cssSelector("div[class='w-full pb-6 space-y-6 sm:max-w-md lg:max-w-lg md:space-y-4 lg:space-y-8 xl:space-y-9 sm:pr-5 lg:pr-0 md:pb-0'] h1[class='font-nunito font-extrabold text-center sm:text-left text-2xl text-primary']"));
         js.executeScript("arguments[0].scrollIntoView();", titleField);
-        Assert.assertEquals(driver.findElement(By.cssSelector("div[class='w-full pb-6 space-y-6 sm:max-w-md lg:max-w-lg md:space-y-4 lg:space-y-8 xl:space-y-9 sm:pr-5 lg:pr-0 md:pb-0'] h1[class='font-nunito font-extrabold text-center sm:text-left text-2xl text-primary']")).getText(), namePage);
+        Assert.assertEquals(titleField.getText(), namePage);
     }
 
     @When("User fill full name with {string}")

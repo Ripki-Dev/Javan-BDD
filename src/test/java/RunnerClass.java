@@ -3,7 +3,7 @@ import io.cucumber.junit.CucumberOptions;
 import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
-@CucumberOptions(features = "src/test/resources/features/bug_validation_contact.feature",
+@CucumberOptions(features = "src/test/resources/features",
         glue = {"classpath:StepDef"},
         plugin = {"pretty", "json:target/cucumber.json"})
 public class RunnerClass {
